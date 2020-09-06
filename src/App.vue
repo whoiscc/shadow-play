@@ -21,10 +21,11 @@
 </template>
 
 <script>
+import shadowPlay from "shadow-play";
 import Control from "./components/Control.vue";
 import Post from "./components/Post.vue";
 
-export default {
+export default shadowPlay({
   name: "App",
   components: {
     Control,
@@ -47,5 +48,5 @@ export default {
       console.log("seraching: " + userName);
     },
   },
-};
+});
 </script>

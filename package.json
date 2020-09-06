@@ -1,17 +1,22 @@
 {
-  "name": "shadow-play",
-  "version": "0.0.0",
+  "name": "shadow-play-demo",
+  "version": "0.0.1",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
   },
   "dependencies": {
     "bulma": "^0.9.0",
+    "shadow-play": "file:lib/shadow-play",
     "vue": "^3.0.0-rc.1"
   },
   "devDependencies": {
     "@vue/compiler-sfc": "^3.0.0-rc.1",
     "sass": "^1.26.10",
-    "vite": "^1.0.0-rc.1"
+    "vite": "^1.0.0-rc.1",
+    "vue-loader": "^16.0.0-beta.5",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^2.5.2"
   }
 }
