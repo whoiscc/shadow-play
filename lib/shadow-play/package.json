@@ -1,6 +1,6 @@
 {
   "name": "shadow-play",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Data binding between frontend and backend.",
   "main": "index.js",
   "scripts": {
