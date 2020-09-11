@@ -13,7 +13,7 @@ module.exports = {
     filename: "backend.js",
   },
   externals: [nodeExternals({
-    allowlist: ['shadow-play']
+    allowlist: ['shadow-play', 'shadow-play/server.mjs']
   })],
   module: {
     rules: [
