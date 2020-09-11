@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var shadow_play_server_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! shadow-play/server.mjs */ \"./node_modules/shadow-play/server.mjs\");\n/* harmony import */ var _src_App_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/App.vue */ \"./src/App.vue\");\n\n\n\nObject(shadow_play_server_mjs__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(3001, [_src_App_vue__WEBPACK_IMPORTED_MODULE_1__[\"default\"]]);\n\n//# sourceURL=webpack:///./backend.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var shadow_play_server__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! shadow-play/server */ \"./node_modules/shadow-play/server.js\");\n/* harmony import */ var _src_App_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/App.vue */ \"./src/App.vue\");\n\n\n\nObject(shadow_play_server__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(3001, [_src_App_vue__WEBPACK_IMPORTED_MODULE_1__[\"default\"]]);\n\n//# sourceURL=webpack:///./backend.js?");
 
 /***/ }),
 
@@ -102,23 +102,23 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var shad
 /*!*******************************************!*\
   !*** ./node_modules/shadow-play/index.js ***!
   \*******************************************/
+/*! exports provided: setConfig, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"setConfig\", function() { return setConfig; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return shadowPlay; });\n/* harmony import */ var detect_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! detect-browser */ \"detect-browser\");\n/* harmony import */ var detect_browser__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(detect_browser__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ \"lodash\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\nconst CONFIG = {\n    backendURL: 'http://localhost:3001',\n}\n\nfunction setConfig(update) {\n    lodash__WEBPACK_IMPORTED_MODULE_1___default.a.extend(CONFIG, update);\n}\n\nfunction shadowPlay(component) {\n    if (Object(detect_browser__WEBPACK_IMPORTED_MODULE_0__[\"detect\"])().type === 'browser') {\n        return frontend(component);\n    } else {\n        return backend(component);\n    }\n}\n\nfunction frontend(component) {\n    return {\n        ...component,\n        mounted() {\n            console.log('mounted:', component.name);\n            console.log('send to: ' + CONFIG.backendURL);\n            fetch(CONFIG.backendURL + `/create/${component.name}`, {\n                method: 'POST',\n            }).then(resp => resp.json()).then(data => console.log(data));\n            component.mounted && component.mounted();\n        }\n    }\n}\n\nfunction backend(component) {\n    return {\n        name: component.name,\n        data: component.data,\n    }\n}\n\n//# sourceURL=webpack:///./node_modules/shadow-play/index.js?");
+
+/***/ }),
+
+/***/ "./node_modules/shadow-play/server.js":
+/*!********************************************!*\
+  !*** ./node_modules/shadow-play/server.js ***!
+  \********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return shadowPlay; });\nfunction shadowPlay(component) {\n    return component;\n}\n\n//# sourceURL=webpack:///./node_modules/shadow-play/index.js?");
-
-/***/ }),
-
-/***/ "./node_modules/shadow-play/server.mjs":
-/*!*********************************************!*\
-  !*** ./node_modules/shadow-play/server.mjs ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(__webpack_module__, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return startServer; });\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ \"express\");\n\n\nfunction startServer(port, componentList) {\n    const app = express__WEBPACK_IMPORTED_MODULE_0__();\n    app.listen(port, () => console.log('server start'));\n}\n\n//# sourceURL=webpack:///./node_modules/shadow-play/server.mjs?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return startServer; });\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! express */ \"express\");\n/* harmony import */ var express__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var cors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! cors */ \"cors\");\n/* harmony import */ var cors__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(cors__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! uuid */ \"uuid\");\n/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(uuid__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\nfunction startServer(port, componentList) {\n    const app = express__WEBPACK_IMPORTED_MODULE_0___default()();\n    app.use(express__WEBPACK_IMPORTED_MODULE_0___default.a.json());\n    app.use(cors__WEBPACK_IMPORTED_MODULE_1___default()());\n    app.post('/create/:name', (req, res) => {\n        console.log('create: ' + req.params.name);\n        res.json({ uuid: Object(uuid__WEBPACK_IMPORTED_MODULE_2__[\"v4\"])() });\n    });\n    app.listen(port, () => console.log('server start'));\n}\n\n//# sourceURL=webpack:///./node_modules/shadow-play/server.js?");
 
 /***/ }),
 
@@ -313,6 +313,28 @@ eval("module.exports = __webpack_require__(/*! ./backend.js */\"./backend.js\");
 
 /***/ }),
 
+/***/ "cors":
+/*!***********************!*\
+  !*** external "cors" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"cors\");\n\n//# sourceURL=webpack:///external_%22cors%22?");
+
+/***/ }),
+
+/***/ "detect-browser":
+/*!*********************************!*\
+  !*** external "detect-browser" ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"detect-browser\");\n\n//# sourceURL=webpack:///external_%22detect-browser%22?");
+
+/***/ }),
+
 /***/ "express":
 /*!**************************!*\
   !*** external "express" ***!
@@ -321,6 +343,28 @@ eval("module.exports = __webpack_require__(/*! ./backend.js */\"./backend.js\");
 /***/ (function(module, exports) {
 
 eval("module.exports = require(\"express\");\n\n//# sourceURL=webpack:///external_%22express%22?");
+
+/***/ }),
+
+/***/ "lodash":
+/*!*************************!*\
+  !*** external "lodash" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"lodash\");\n\n//# sourceURL=webpack:///external_%22lodash%22?");
+
+/***/ }),
+
+/***/ "uuid":
+/*!***********************!*\
+  !*** external "uuid" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"uuid\");\n\n//# sourceURL=webpack:///external_%22uuid%22?");
 
 /***/ }),
 
